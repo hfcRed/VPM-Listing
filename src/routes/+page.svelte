@@ -37,164 +37,256 @@
 <main>
 	<header class="hero">
 		{#if listing.bannerUrl}
-			<img class="banner" src={asset(`/${listing.bannerUrl}`)} alt="" width="1000" height="200" />
+			<img class="banner" src={asset(`/${listing.bannerUrl}`)} alt="" width="1000" height="300" />
 		{/if}
-		<h1>{listing.name}</h1>
-		{#if listing.description}
-			<p class="muted">{listing.description}</p>
-		{/if}
-		<p class="muted small">
-			Published by
-			{#if listing.author.url}
-				<a href={listing.author.url} target="_blank" rel="external noreferrer"
-					>{listing.author.name}</a
-				>
-			{:else}
-				{listing.author.name}
+		<div class="hero-text">
+			<h1>{listing.name}</h1>
+			{#if listing.description}
+				<p class="lead">{listing.description}</p>
 			{/if}
-			{#if listing.infoLink}
-				· <a href={listing.infoLink.url} target="_blank" rel="external noreferrer"
-					>{listing.infoLink.text ?? 'Learn more'}</a
-				>
-			{/if}
-		</p>
+			<p class="byline">
+				Published by
+				{#if listing.author.url}
+					<a href={listing.author.url} target="_blank" rel="external noreferrer"
+						>{listing.author.name}</a
+					>
+				{:else}
+					{listing.author.name}
+				{/if}
+				{#if listing.infoLink}
+					<span aria-hidden="true">•</span>
+					<a href={listing.infoLink.url} target="_blank" rel="external noreferrer"
+						>{listing.infoLink.text ?? 'Learn more'}</a
+					>
+				{/if}
+			</p>
+		</div>
 	</header>
 
-	<section class="add-bar" aria-label="Add this listing to the VRChat Creator Companion">
-		<Input value={listing.url} readonly mono aria-label="Listing URL" />
-		<div class="add-actions">
-			<Button href={addUrl}>Add to VCC</Button>
+	<section class="add" aria-labelledby="add-title">
+		<div class="add-text">
+			<h2 id="add-title">Add this listing to your VCC</h2>
+			<p class="muted">
+				The VRChat Creator Companion will install and update every package for you.
+				<button class="link" type="button" onclick={() => (helpOpen = true)}>
+					How does this work?
+				</button>
+			</p>
+		</div>
+		<div class="add-row">
+			<Input value={listing.url} readonly mono aria-label="Listing URL" />
 			<CopyButton text={listing.url} />
-			<Button
-				variant="minimal"
-				square
-				onclick={() => (helpOpen = true)}
-				title="How to add a listing to the VCC"
-				aria-label="How to add a listing to the VCC"
-			>
-				<svg
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					aria-hidden="true"
-				>
-					<circle cx="12" cy="12" r="10" />
-					<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-					<path d="M12 17h.01" />
-				</svg>
-			</Button>
+			<Button href={addUrl}>Add to VCC</Button>
 		</div>
 	</section>
 
-	<Input
-		type="search"
-		bind:value={query}
-		placeholder="Search packages…"
-		aria-label="Search packages"
-	/>
+	<section class="packages" aria-labelledby="packages-title">
+		<div class="packages-head">
+			<h2 id="packages-title">
+				Packages <span class="count">{listing.packages.length}</span>
+			</h2>
+			<div class="search">
+				<Input
+					type="search"
+					bind:value={query}
+					placeholder="Search packages…"
+					aria-label="Search packages"
+				/>
+			</div>
+		</div>
+		<ul class="package-list">
+			{#each filtered as pkg (pkg.name)}
+				<li><PackageCard {pkg} {addUrl} onDetails={() => (selected = pkg)} /></li>
+			{:else}
+				<li class="empty muted">No packages match "{query}".</li>
+			{/each}
+		</ul>
+	</section>
 
-	<ul class="packages">
-		{#each filtered as pkg (pkg.name)}
-			<li><PackageCard {pkg} {addUrl} onDetails={() => (selected = pkg)} /></li>
-		{:else}
-			<li class="empty muted">No packages match "{query}".</li>
-		{/each}
-	</ul>
-
-	<footer class="muted small">
-		{listing.packages.length}
-		{listing.packages.length === 1 ? 'package' : 'packages'} · listing updated {formatDate(
-			listing.generatedAt
-		)}
+	<footer class="muted">
+		Listing updated {formatDate(listing.generatedAt)}
+		<span aria-hidden="true">•</span>
+		<a href={listing.url} rel="external">index.json</a>
 	</footer>
 </main>
 
 <HelpDialog open={helpOpen} listingUrl={listing.url} onclose={() => (helpOpen = false)} />
-<PackageDialog pkg={selected} listingUrl={listing.url} onclose={() => (selected = null)} />
+<PackageDialog pkg={selected} onclose={() => (selected = null)} />
 
 <style>
 	main {
-		max-width: 60rem;
+		max-width: 56rem;
 		margin: 0 auto;
-		padding: var(--s-12) var(--s-4);
+		padding: var(--s-10) var(--s-5) var(--s-12);
 		display: flex;
 		flex-direction: column;
-		gap: var(--s-5);
+		gap: var(--s-12);
 	}
 
 	.hero {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		text-align: center;
-		gap: var(--s-2);
+		gap: var(--s-8);
 	}
 
 	.banner {
 		width: 100%;
-		height: auto;
-		aspect-ratio: 5 / 1;
 		object-fit: cover;
 		border-radius: var(--radius-box);
-		margin-bottom: var(--s-3);
+	}
+
+	.hero-text {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: var(--s-2);
 	}
 
 	h1 {
-		font-size: 2rem;
+		font-size: var(--font-2xl);
 		font-weight: var(--weight-extra);
+		letter-spacing: -0.01em;
 	}
 
-	.small {
-		font-size: var(--font-xs);
+	.lead {
+		font-size: var(--font-lg);
+		color: var(--color-text-high);
+		max-width: 36rem;
 	}
 
-	.add-bar {
+	.byline {
+		font-size: var(--font-sm);
+		color: var(--color-text-high);
 		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
 		gap: var(--s-2);
-		align-items: center;
-		padding: var(--s-3);
+	}
+
+	.add {
+		display: flex;
+		flex-direction: column;
+		gap: var(--s-4);
+		padding: var(--s-6);
 		border-radius: var(--radius-box);
 		background-color: var(--color-bg-high);
 	}
 
-	.add-actions {
+	.add-text {
+		display: flex;
+		flex-direction: column;
+		gap: var(--s-1);
+	}
+
+	h2 {
+		font-size: var(--font-xl);
+		font-weight: var(--weight-extra);
+	}
+
+	.link {
+		appearance: none;
+		border: none;
+		padding: 0;
+		background: none;
+		color: var(--color-text-accent);
+		cursor: pointer;
+		border-radius: var(--radius-field);
+
+		&:hover {
+			text-decoration: underline;
+		}
+
+		&:focus-visible {
+			outline: var(--focus-ring);
+			outline-offset: 1px;
+		}
+	}
+
+	.add-row {
 		display: flex;
 		gap: var(--s-2);
-		flex-shrink: 0;
+		align-items: center;
 	}
 
 	.packages {
+		display: flex;
+		flex-direction: column;
+		gap: var(--s-5);
+	}
+
+	.packages-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--s-4);
+	}
+
+	.count {
+		display: inline-block;
+		margin-left: var(--s-2);
+		font-size: var(--font-sm);
+		font-weight: var(--weight-semi);
+		color: var(--color-text-high);
+		vertical-align: middle;
+		font-family: var(--font-mono);
+	}
+
+	.search {
+		width: 100%;
+		max-width: 18rem;
+	}
+
+	.package-list {
 		list-style: none;
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: var(--s-3);
+		gap: var(--s-4);
 	}
 
 	.empty {
 		text-align: center;
-		padding: var(--s-8) 0;
+		padding: var(--s-10) 0;
 	}
 
 	footer {
-		text-align: center;
+		display: flex;
+		justify-content: center;
+		gap: var(--s-2);
+		font-size: var(--font-sm);
 	}
 
 	@media (max-width: 640px) {
-		.add-bar {
-			flex-direction: column;
-			align-items: stretch;
+		main {
+			padding: var(--s-6) var(--s-4) var(--s-10);
+			gap: var(--s-8);
 		}
 
-		.add-actions {
-			flex-wrap: wrap;
+		.hero {
+			gap: var(--s-5);
 		}
 
 		h1 {
 			font-size: var(--font-xl);
+		}
+
+		.lead {
+			font-size: var(--font-md);
+		}
+
+		.add {
+			padding: var(--s-5);
+		}
+
+		.add-row,
+		.packages-head {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.search {
+			max-width: none;
 		}
 	}
 </style>

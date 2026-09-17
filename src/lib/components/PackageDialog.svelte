@@ -1,25 +1,20 @@
 <script lang="ts">
 	import { formatCount, formatDate } from '$lib/listing';
 	import type { SitePackage } from '$lib/types';
-	import CopyButton from './CopyButton.svelte';
 	import Dialog from './Dialog.svelte';
-	import Input from './Input.svelte';
 
 	interface Props {
 		pkg: SitePackage | null;
-		listingUrl: string;
 		onclose: () => void;
 	}
 
-	let { pkg, listingUrl, onclose }: Props = $props();
+	let { pkg, onclose }: Props = $props();
 
 	const dependencies = $derived(Object.entries(pkg?.vpmDependencies ?? {}));
 </script>
 
 <Dialog open={pkg !== null} {onclose} title={pkg?.displayName ?? ''}>
 	{#if pkg}
-		<p class="muted mono">{pkg.name}</p>
-
 		{#if pkg.description}
 			<section>
 				<h3>About</h3>
@@ -41,7 +36,23 @@
 			{#if pkg.license}
 				<div>
 					<h3>License</h3>
-					<p>{pkg.license}</p>
+					{#if pkg.licensesUrl}
+						<a href={pkg.licensesUrl} target="_blank" rel="external noreferrer">{pkg.license}</a>
+					{:else}
+						<p>{pkg.license}</p>
+					{/if}
+				</div>
+			{/if}
+			{#if pkg.documentationUrl}
+				<div>
+					<h3>Documentation</h3>
+					<a href={pkg.documentationUrl} target="_blank" rel="external noreferrer">Read the docs</a>
+				</div>
+			{/if}
+			{#if pkg.changelogUrl}
+				<div>
+					<h3>Changelog</h3>
+					<a href={pkg.changelogUrl} target="_blank" rel="external noreferrer">View changes</a>
 				</div>
 			{/if}
 			{#if pkg.repoUrl}
@@ -109,14 +120,6 @@
 				</table>
 			</div>
 		</section>
-
-		<section>
-			<h3>Listing URL</h3>
-			<div class="url-row">
-				<Input value={listingUrl} readonly mono aria-label="Listing URL" />
-				<CopyButton text={listingUrl} />
-			</div>
-		</section>
 	{/if}
 </Dialog>
 
@@ -124,7 +127,7 @@
 	section {
 		display: flex;
 		flex-direction: column;
-		gap: var(--s-1-5);
+		gap: var(--s-1);
 	}
 
 	h3 {
@@ -172,13 +175,13 @@
 	table {
 		width: 100%;
 		border-collapse: collapse;
-		font-size: var(--font-xs);
+		font-size: var(--font-sm);
 	}
 
 	th,
 	td {
 		text-align: left;
-		padding: var(--s-2) var(--s-3);
+		padding: var(--s-3) var(--s-4);
 		white-space: nowrap;
 	}
 
@@ -200,10 +203,5 @@
 		display: flex;
 		gap: var(--s-3);
 		justify-content: flex-end;
-	}
-
-	.url-row {
-		display: flex;
-		gap: var(--s-2);
 	}
 </style>

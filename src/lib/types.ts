@@ -26,6 +26,9 @@ export interface PackageManifest {
 	keywords?: string[];
 	vpmDependencies?: Record<string, string>;
 	license?: string;
+	licensesUrl?: string;
+	documentationUrl?: string;
+	changelogUrl?: string;
 	url?: string;
 	[key: string]: unknown;
 }
@@ -62,6 +65,9 @@ export interface SitePackage {
 	keywords: string[];
 	vpmDependencies: Record<string, string>;
 	license?: string;
+	licensesUrl?: string;
+	documentationUrl?: string;
+	changelogUrl?: string;
 	repoUrl?: string;
 	latest: SiteVersion;
 	versions: SiteVersion[];

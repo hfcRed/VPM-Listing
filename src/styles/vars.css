@@ -1,21 +1,20 @@
 :root {
-	--_base-h: 310;
+	--_base-h: 252;
 	--_base-c-0: 0;
-	--_base-c-1: 0.015190000000000002;
-	--_base-c-2: 0.01922;
-	--_base-c-3: 0.0434;
-	--_base-c-4: 0.039990000000000005;
-	--_base-c-5: 0.04216000000000001;
-	--_base-c-6: 0.039990000000000005;
-	--_base-c-7: 0.020770000000000004;
-
-	--_acc-h: 310;
-	--_acc-c-0: 0.11399999999999999;
-	--_acc-c-1: 0.26271639563106663;
+	--_base-c-1: 0.011269999999999999;
+	--_base-c-2: 0.01426;
+	--_base-c-3: 0.0322;
+	--_base-c-4: 0.029670000000000002;
+	--_base-c-5: 0.03128;
+	--_base-c-6: 0.029670000000000002;
+	--_base-c-7: 0.01541;
+	--_acc-h: 206;
+	--_acc-c-0: 0.0444821244091539;
+	--_acc-c-1: 0.0889642488183078;
 	--_acc-c-2: 0.10200000000000001;
 	--_acc-c-3: 0.075;
-	--_acc-c-4: 0.26776863400858714;
-	--_acc-c-5: 0.1616716280806564;
+	--_acc-c-4: 0.09067509975712142;
+	--_acc-c-5: 0.05474723004203557;
 
 	--color-base-0: oklch(17% var(--_base-c-7) var(--_base-h));
 	--color-base-1: oklch(25% var(--_base-c-6) var(--_base-h));
@@ -55,6 +54,7 @@
 	--font-mono:
 		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
 		monospace;
+	--font-2xl: 2.25rem;
 	--font-xl: 1.5rem;
 	--font-lg: 1.2rem;
 	--font-md: 1rem;
@@ -78,6 +78,7 @@
 	--s-5: 1.25rem;
 	--s-6: 1.5rem;
 	--s-8: 2rem;
+	--s-10: 2.5rem;
 	--s-12: 3rem;
 
 	--field-size-sm: 2rem;
@@ -85,9 +86,9 @@
 	--field-size-icon: 18px;
 	--field-padding: 0.6rem;
 
-	--radius-box: 8px;
-	--radius-field: 4px;
-	--radius-selector: 4px;
+	--radius-box: 4px;
+	--radius-field: 2px;
+	--radius-selector: 2px;
 	--radius-full: 99999px;
 }
 

@@ -245,6 +245,9 @@ async function main() {
 			keywords: manifest.keywords ?? [],
 			vpmDependencies: manifest.vpmDependencies ?? {},
 			license: manifest.license,
+			licensesUrl: manifest.licensesUrl,
+			documentationUrl: manifest.documentationUrl,
+			changelogUrl: manifest.changelogUrl,
 			repoUrl: latest.repoUrl,
 			latest: latest.site,
 			versions: versions.map((version) => version.site)

@@ -49,7 +49,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: var(--s-4) var(--s-4);
+		padding: var(--s-4) var(--s-6);
 		border-bottom: var(--border-style);
 		gap: var(--s-4);
 		position: sticky;
@@ -58,10 +58,10 @@
 	}
 
 	div {
-		padding: var(--s-2) var(--s-4);
+		padding: var(--s-6);
 		display: flex;
 		flex-direction: column;
-		gap: var(--s-4);
+		gap: var(--s-6);
 	}
 
 	h2 {
