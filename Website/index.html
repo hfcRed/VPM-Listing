@@ -3,13 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VCC Listing</title>
+    <title>{{~ listingInfo.Name ~}}</title>
+    {{~ if listingInfo.Description; ~}}
+    <meta name="description" content="{{ listingInfo.Description }}" />
+    {{~ end; ~}}
     <script
       type="module"
-      src="https://unpkg.com/@fluentui/web-components"
+      src="https://unpkg.com/@fluentui/web-components@2.6.1"
     ></script>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" href="./favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
   </head>
   <body>
     <div class="col align-items-center content">
@@ -36,6 +39,13 @@
               >{{ listingInfo.Author.Name }}</a
             >
           </div>
+          {{~ if listingInfo.InfoLink.Url; ~}}
+          <div class="caption1 mb-2">
+            <a href="{{ listingInfo.InfoLink.Url }}" target="_blank"
+              >{{ if listingInfo.InfoLink.Text; listingInfo.InfoLink.Text; else; "Learn more"; end; }}</a
+            >
+          </div>
+          {{~ end; ~}}
         </div>
       </div>
       <div class="addToVccBlock mt-4 row align-items-center">
