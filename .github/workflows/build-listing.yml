@@ -1,15 +1,13 @@
 name: Build Repo Listing
 
-# Builds index.json plus the landing page from source.json and the GitHub
-# releases of the listed repos, then deploys them to GitHub Pages.
+# Generates index.json from the GitHub releases of the repositories in
+# source.json, builds the landing page and deploys both to GitHub Pages.
 on:
   workflow_dispatch:
   push:
     branches: main
-    paths:
-      - source.json
-      - Website/**
-      - .github/workflows/build-listing.yml
+    paths-ignore:
+      - README.md
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -22,10 +20,6 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
-env:
-  listPublishDirectory: Website
-  pathToCi: ci
-
 jobs:
   build-listing:
     name: build-listing
@@ -34,28 +28,28 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout listing
+      - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Checkout package-list-action
-        uses: actions/checkout@v6
-        with:
-          repository: vrchat-community/package-list-action
-          path: ${{ env.pathToCi }}
-          clean: false # otherwise the local repo will no longer be checked out
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
 
-      - name: Restore Cache
-        uses: actions/cache@v5
+      - name: Install Node.js
+        uses: actions/setup-node@v6
         with:
-          path: |
-            ${{ env.pathToCi }}/.nuke/temp
-            ~/.nuget/packages
-          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
+          node-version: 24
+          cache: pnpm
 
-      - name: Build Package Version Listing
-        run: ${{ env.pathToCi }}/build.cmd BuildMultiPackageListing --root ${{ env.pathToCi }} --list-publish-directory $GITHUB_WORKSPACE/${{ env.listPublishDirectory }}
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate listing and build site
+        run: pnpm build
         env:
+          # Raises the GitHub API rate limit for reading releases
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GitHub Pages serves project sites from /<repo-name>
+          BASE_PATH: /${{ github.event.repository.name }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
@@ -63,7 +57,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          path: ${{ env.listPublishDirectory }}
+          path: build
 
       - name: Deploy to GitHub Pages
         id: deployment

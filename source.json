@@ -1,20 +1,18 @@
 {
-    "name":"hfcReds VPM Packages",
-    "id":"com.hfcred.vpm-listing",
-    "url":"https://hfcRed.github.io/VPM-Listing/index.json",
-    "author":{
-        "email":"hfcred@gmx.net",
-        "name":"hfcRed",
-        "url":"https://hfcred.carrd.co"
-    },
-    "description":"For use with the VRChat Creator Companion",
-    "infoLink":{
-        "url":"https://github.com/hfcRed/VPM-Listing",
-        "text":"View on GitHub"
-    },
-    "bannerUrl":"banner.webp",
-    "githubRepos":[
-        "hfcRed/Animation-Repathing"
-    ],
-    "packages":[]
+	"name": "hfcReds VPM Packages",
+	"id": "com.hfcred.vpm-listing",
+	"url": "https://hfcRed.github.io/VPM-Listing/index.json",
+	"author": {
+		"email": "hfcred@gmx.net",
+		"name": "hfcRed",
+		"url": "https://hfcred.carrd.co"
+	},
+	"description": "For use with the VRChat Creator Companion",
+	"infoLink": {
+		"url": "https://github.com/hfcRed/VPM-Listing",
+		"text": "View on GitHub"
+	},
+	"bannerUrl": "banner.webp",
+	"githubRepos": ["hfcRed/Animation-Repathing"],
+	"packages": []
 }

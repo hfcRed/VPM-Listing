@@ -1,0 +1,110 @@
+:root {
+	--_base-h: 310;
+	--_base-c-0: 0;
+	--_base-c-1: 0.015190000000000002;
+	--_base-c-2: 0.01922;
+	--_base-c-3: 0.0434;
+	--_base-c-4: 0.039990000000000005;
+	--_base-c-5: 0.04216000000000001;
+	--_base-c-6: 0.039990000000000005;
+	--_base-c-7: 0.020770000000000004;
+
+	--_acc-h: 310;
+	--_acc-c-0: 0.11399999999999999;
+	--_acc-c-1: 0.26271639563106663;
+	--_acc-c-2: 0.10200000000000001;
+	--_acc-c-3: 0.075;
+	--_acc-c-4: 0.26776863400858714;
+	--_acc-c-5: 0.1616716280806564;
+
+	--color-base-0: oklch(17% var(--_base-c-7) var(--_base-h));
+	--color-base-1: oklch(25% var(--_base-c-6) var(--_base-h));
+	--color-base-2: oklch(32% var(--_base-c-5) var(--_base-h));
+	--color-base-3: oklch(46% var(--_base-c-4) var(--_base-h));
+	--color-base-4: oklch(64% var(--_base-c-3) var(--_base-h));
+	--color-base-5: oklch(90% var(--_base-c-2) var(--_base-h));
+	--color-base-6: oklch(95% var(--_base-c-1) var(--_base-h));
+	--color-base-7: oklch(100% var(--_base-c-0) var(--_base-h));
+
+	--color-accent-low: oklch(88% var(--_acc-c-3) var(--_acc-h));
+	--color-accent: oklch(53% var(--_acc-c-4) var(--_acc-h));
+	--color-accent-high: oklch(32% var(--_acc-c-5) var(--_acc-h));
+	--color-text-accent: var(--color-accent);
+
+	--color-text: var(--color-base-0);
+	--color-text-high: var(--color-base-3);
+	--color-text-inverse: var(--color-base-7);
+
+	--color-bg: var(--color-base-7);
+	--color-bg-high: var(--color-base-6);
+	--color-bg-higher: var(--color-base-5);
+
+	--color-border: var(--color-base-5);
+	--color-border-high: var(--color-base-4);
+	--border-width: 1px;
+	--border-style: var(--border-width) solid var(--color-border);
+	--border-style-high: var(--border-width) solid var(--color-border-high);
+	--border-style-accent: var(--border-width) solid var(--color-text-accent);
+
+	--focus-ring: 2px solid var(--color-text-accent);
+
+	--font-sans:
+		ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+		'Segoe UI Symbol', 'Noto Color Emoji';
+	--font-mono:
+		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+		monospace;
+	--font-xl: 1.5rem;
+	--font-lg: 1.2rem;
+	--font-md: 1rem;
+	--font-sm: 0.9rem;
+	--font-xs: 0.8rem;
+	--font-2xs: 0.7rem;
+
+	--weight-extra: 700;
+	--weight-bold: 600;
+	--weight-semi: 500;
+	--weight-body: 400;
+
+	--line-height: 1.5;
+
+	--s-0-5: 0.125rem;
+	--s-1: 0.25rem;
+	--s-1-5: 0.375rem;
+	--s-2: 0.5rem;
+	--s-3: 0.75rem;
+	--s-4: 1rem;
+	--s-5: 1.25rem;
+	--s-6: 1.5rem;
+	--s-8: 2rem;
+	--s-12: 3rem;
+
+	--field-size-sm: 2rem;
+	--field-size: 2.5rem;
+	--field-size-icon: 18px;
+	--field-padding: 0.6rem;
+
+	--radius-box: 8px;
+	--radius-field: 4px;
+	--radius-selector: 4px;
+	--radius-full: 99999px;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-base-0: oklch(100% var(--_base-c-0) var(--_base-h));
+		--color-base-1: oklch(95% var(--_base-c-1) var(--_base-h));
+		--color-base-2: oklch(90% var(--_base-c-2) var(--_base-h));
+		--color-base-3: oklch(64% var(--_base-c-3) var(--_base-h));
+		--color-base-4: oklch(46% var(--_base-c-4) var(--_base-h));
+		--color-base-5: oklch(32% var(--_base-c-5) var(--_base-h));
+		--color-base-6: oklch(25% var(--_base-c-6) var(--_base-h));
+		--color-base-7: oklch(17% var(--_base-c-7) var(--_base-h));
+
+		--color-accent-low: oklch(26% 0.0801740871856143 var(--_acc-h));
+		--color-accent: oklch(52% 0.1603481743712286 var(--_acc-h));
+		--color-accent-high: oklch(83% 0.0816 var(--_acc-h));
+		--color-text-accent: var(--color-accent-high);
+	}
+}

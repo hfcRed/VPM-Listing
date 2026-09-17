@@ -1,0 +1,43 @@
+{
+	"name": "vpm-listing",
+	"private": true,
+	"version": "1.0.0",
+	"type": "module",
+	"description": "VRChat Creator Companion listing for hfcRed's packages",
+	"author": "hfcRed",
+	"license": "MIT",
+	"packageManager": "pnpm@11.22.0",
+	"engines": {
+		"node": ">=24"
+	},
+	"scripts": {
+		"generate": "node scripts/build-index.ts",
+		"dev": "vite dev",
+		"build": "pnpm generate && vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write ."
+	},
+	"devDependencies": {
+		"@eslint/compat": "^2.0.2",
+		"@eslint/js": "^9.39.2",
+		"@sveltejs/adapter-static": "^3.0.10",
+		"@sveltejs/kit": "^2.70.3",
+		"@sveltejs/vite-plugin-svelte": "^7.3.0",
+		"@types/node": "^24.10.0",
+		"eslint": "^9.39.2",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-svelte": "^3.14.0",
+		"globals": "^17.3.0",
+		"prettier": "^3.8.1",
+		"prettier-plugin-svelte": "^3.4.1",
+		"svelte": "^5.57.0",
+		"svelte-check": "^4.7.6",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.54.0",
+		"vite": "^8.3.0"
+	}
+}

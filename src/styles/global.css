@@ -1,0 +1,144 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	overflow-wrap: break-word;
+}
+
+html {
+	color-scheme: light dark;
+	accent-color: var(--color-text-accent);
+	scrollbar-gutter: stable;
+}
+
+body {
+	width: 100%;
+	min-height: 100vh;
+	overflow-x: hidden;
+	line-height: var(--line-height);
+	color: var(--color-text);
+	background-color: var(--color-bg);
+	font-family: var(--font-sans);
+
+	-moz-osx-font-smoothing: antialiased;
+	-webkit-font-smoothing: antialiased;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-text-size-adjust: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	overflow-wrap: anywhere;
+}
+
+h1,
+h2,
+h3 {
+	line-height: 1.2;
+	text-wrap: balance;
+}
+
+p {
+	text-wrap: pretty;
+}
+
+img,
+svg,
+canvas,
+video,
+audio,
+iframe,
+embed,
+object {
+	display: block;
+	max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+	font: inherit;
+	color: inherit;
+}
+
+a {
+	color: var(--color-text-accent);
+	text-decoration: none;
+	border-radius: var(--radius-field);
+
+	&:hover {
+		text-decoration: underline;
+	}
+
+	&:focus-visible {
+		outline: var(--focus-ring);
+		outline-offset: 1px;
+	}
+}
+
+details {
+	& summary {
+		cursor: pointer;
+		user-select: none;
+		-webkit-user-select: none;
+	}
+}
+
+.scrollbar,
+textarea {
+	/* Firefox, Chrome 121+, Safari 18.2+ */
+	@supports (scrollbar-color: auto) {
+		scrollbar-width: thin;
+		scrollbar-color: var(--color-bg-higher) transparent;
+	}
+
+	/* Legacy */
+	@supports not (scrollbar-color: auto) {
+		&::-webkit-scrollbar,
+		&::-webkit-scrollbar-track {
+			background-color: transparent;
+			height: 14px;
+			width: 14px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: var(--color-base-4);
+			border-radius: var(--radius-full);
+			border: 4px solid transparent;
+			background-clip: content-box;
+		}
+
+		&::-webkit-scrollbar-corner {
+			background-color: transparent;
+		}
+	}
+}
+
+.muted {
+	color: var(--color-text-high);
+}
+
+.mono {
+	font-family: var(--font-mono);
+	font-size: var(--font-xs);
+}
+
+.badge {
+	display: inline-block;
+	padding: var(--s-0-5) var(--s-2);
+	border-radius: var(--radius-full);
+	background-color: var(--color-bg-higher);
+	color: var(--color-text-high);
+	font-size: var(--font-2xs);
+	font-weight: var(--weight-bold);
+	line-height: 1.6;
+	vertical-align: middle;
+	white-space: nowrap;
+}
