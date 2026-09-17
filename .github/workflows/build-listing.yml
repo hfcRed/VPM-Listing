@@ -1,28 +1,32 @@
 name: Build Repo Listing
 
-on: 
+# Builds index.json plus the landing page from source.json and the GitHub
+# releases of the listed repos, then deploys them to GitHub Pages.
+on:
   workflow_dispatch:
   push:
     branches: main
-    paths: source.json
+    paths:
+      - source.json
+      - Website/**
+      - .github/workflows/build-listing.yml
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
-  
+
 # Allow one concurrent deployment
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
-  
+
 env:
   listPublishDirectory: Website
   pathToCi: ci
 
 jobs:
-  
   build-listing:
     name: build-listing
     environment:
@@ -30,35 +34,37 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      
-      - uses: actions/checkout@v3 # check out this repo
-      - uses: actions/checkout@v3 # check out automation repo
+      - name: Checkout listing
+        uses: actions/checkout@v6
+
+      - name: Checkout package-list-action
+        uses: actions/checkout@v6
         with:
           repository: vrchat-community/package-list-action
-          path: ${{env.pathToCi}}
+          path: ${{ env.pathToCi }}
           clean: false # otherwise the local repo will no longer be checked out
-          
+
       - name: Restore Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: |
-            ${{env.pathToCi}}/.nuke/temp
+            ${{ env.pathToCi }}/.nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
-          
+
       - name: Build Package Version Listing
-        run: ${{env.pathToCi}}/build.cmd BuildMultiPackageListing --root ${{env.pathToCi}} --list-publish-directory $GITHUB_WORKSPACE/${{env.listPublishDirectory}}
+        run: ${{ env.pathToCi }}/build.cmd BuildMultiPackageListing --root ${{ env.pathToCi }} --list-publish-directory $GITHUB_WORKSPACE/${{ env.listPublishDirectory }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
- 
+
       - name: Setup Pages
-        uses: actions/configure-pages@v3
-        
+        uses: actions/configure-pages@v6
+
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
-          path: ${{env.listPublishDirectory}}
-          
+          path: ${{ env.listPublishDirectory }}
+
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v5
