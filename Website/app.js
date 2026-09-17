@@ -1,4 +1,4 @@
-import { baseLayerLuminance, StandardLuminance } from 'https://unpkg.com/@fluentui/web-components';
+import { baseLayerLuminance, StandardLuminance } from 'https://unpkg.com/@fluentui/web-components@2.6.1';
 
 const LISTING_URL = "{{ listingInfo.Url }}";
 
@@ -76,59 +76,55 @@ const setTheme = () => {
     addListingToVccHelp.hidden = true;
   });
 
-  const vccListingInfoUrlFieldCopy = document.getElementById('vccListingInfoUrlFieldCopy');
-  vccListingInfoUrlFieldCopy.addEventListener('click', () => {
-    const vccUrlField = document.getElementById('vccListingInfoUrlField');
-    vccUrlField.select();
-    navigator.clipboard.writeText(vccUrlField.value);
-    vccUrlFieldCopy.appearance = 'accent';
-    setTimeout(() => {
-      vccUrlFieldCopy.appearance = 'neutral';
-    }, 1000);
-  });
+  const setupCopyButton = (buttonId, fieldId) => {
+    const button = document.getElementById(buttonId);
+    const field = document.getElementById(fieldId);
+    button.addEventListener('click', () => {
+      field.select();
+      navigator.clipboard.writeText(field.value);
+      button.appearance = 'accent';
+      setTimeout(() => {
+        button.appearance = 'neutral';
+      }, 1000);
+    });
+  };
+  setupCopyButton('vccUrlFieldCopy', 'vccUrlField');
+  setupCopyButton('vccListingInfoUrlFieldCopy', 'vccListingInfoUrlField');
+  setupCopyButton('packageInfoVccUrlFieldCopy', 'packageInfoVccUrlField');
 
   const vccAddRepoButton = document.getElementById('vccAddRepoButton');
   vccAddRepoButton.addEventListener('click', () => window.location.assign(`vcc://vpm/addRepo?url=${encodeURIComponent(LISTING_URL)}`));
 
-  const vccUrlFieldCopy = document.getElementById('vccUrlFieldCopy');
-  vccUrlFieldCopy.addEventListener('click', () => {
-    const vccUrlField = document.getElementById('vccUrlField');
-    vccUrlField.select();
-    navigator.clipboard.writeText(vccUrlField.value);
-    vccUrlFieldCopy.appearance = 'accent';
-    setTimeout(() => {
-      vccUrlFieldCopy.appearance = 'neutral';
-    }, 1000);
-  });
-
   const rowMoreMenu = document.getElementById('rowMoreMenu');
-  const hideRowMoreMenu = e => {
-    if (rowMoreMenu.contains(e.target)) return;
+  const rowMoreMenuDownload = document.getElementById('rowMoreMenuDownload');
+  let rowMoreMenuPackageUrl = '';
+
+  const closeRowMoreMenu = () => {
     document.removeEventListener('click', hideRowMoreMenu);
     rowMoreMenu.hidden = true;
-  }
+  };
+  const hideRowMoreMenu = e => {
+    if (rowMoreMenu.contains(e.target)) return;
+    closeRowMoreMenu();
+  };
+
+  rowMoreMenuDownload.addEventListener('change', () => {
+    if (rowMoreMenuPackageUrl) window.open(rowMoreMenuPackageUrl, '_blank');
+    closeRowMoreMenu();
+  });
 
   const rowMenuButtons = document.querySelectorAll('.rowMenuButton');
   rowMenuButtons.forEach(button => {
     button.addEventListener('click', e => {
-      if (rowMoreMenu?.hidden) {
-        rowMoreMenu.style.top = `${e.clientY + e.target.clientHeight}px`;
-        rowMoreMenu.style.left = `${e.clientX - 120}px`;
-        rowMoreMenu.hidden = false;
+      if (!rowMoreMenu.hidden) return;
+      rowMoreMenuPackageUrl = button.dataset.packageUrl ?? '';
+      rowMoreMenu.style.top = `${e.clientY + button.clientHeight}px`;
+      rowMoreMenu.style.left = `${e.clientX - 120}px`;
+      rowMoreMenu.hidden = false;
 
-        const downloadLink = rowMoreMenu.querySelector('#rowMoreMenuDownload');
-        const downloadListener = () => {
-          window.open(e?.target?.dataset?.packageUrl, '_blank');
-        }
-        downloadLink.addEventListener('change', () => {
-          downloadListener();
-          downloadLink.removeEventListener('change', downloadListener);
-        });
-
-        setTimeout(() => {
-          document.addEventListener('click', hideRowMoreMenu);
-        }, 1);
-      }
+      setTimeout(() => {
+        document.addEventListener('click', hideRowMoreMenu);
+      }, 1);
     });
   });
 
@@ -160,9 +156,9 @@ const setTheme = () => {
 
   const rowPackageInfoButton = document.querySelectorAll('.rowPackageInfoButton');
   rowPackageInfoButton.forEach((button) => {
-    button.addEventListener('click', e => {
-      const packageId = e.target.dataset?.packageId;
-      const packageInfo = PACKAGES?.[packageId];
+    button.addEventListener('click', () => {
+      const packageId = button.dataset.packageId;
+      const packageInfo = PACKAGES[packageId];
       if (!packageInfo) {
         console.error(`Did not find package ${packageId}. Packages available:`, PACKAGES);
         return;
@@ -211,17 +207,6 @@ const setTheme = () => {
         modalControl.style.setProperty('--dialog-height', `${height + 14}px`);
       }, 1);
     });
-  });
-
-  const packageInfoVccUrlFieldCopy = document.getElementById('packageInfoVccUrlFieldCopy');
-  packageInfoVccUrlFieldCopy.addEventListener('click', () => {
-    const vccUrlField = document.getElementById('packageInfoVccUrlField');
-    vccUrlField.select();
-    navigator.clipboard.writeText(vccUrlField.value);
-    vccUrlFieldCopy.appearance = 'accent';
-    setTimeout(() => {
-      vccUrlFieldCopy.appearance = 'neutral';
-    }, 1000);
   });
 
   const packageInfoListingHelp = document.getElementById('packageInfoListingHelp');
