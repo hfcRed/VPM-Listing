@@ -8,6 +8,10 @@
         "url":"https://hfcred.carrd.co"
     },
     "description":"For use with the VRChat Creator Companion",
+    "infoLink":{
+        "url":"https://github.com/hfcRed/VPM-Listing",
+        "text":"View on GitHub"
+    },
     "bannerUrl":"banner.webp",
     "githubRepos":[
         "hfcRed/Animation-Repathing"
