@@ -36,8 +36,19 @@
 
 <main>
 	<header class="hero">
-		{#if listing.bannerUrl}
-			<img class="banner" src={asset(`/${listing.bannerUrl}`)} alt="" width="1000" height="300" />
+		{#if listing.banner}
+			<picture>
+				{#if listing.banner.dark}
+					<source srcset={asset(`/${listing.banner.dark}`)} media="(prefers-color-scheme: dark)" />
+				{/if}
+				<img
+					class="banner"
+					src={asset(`/${listing.banner.light}`)}
+					alt=""
+					width="1000"
+					height="300"
+				/>
+			</picture>
 		{/if}
 		<div class="hero-text">
 			<h1>{listing.name}</h1>

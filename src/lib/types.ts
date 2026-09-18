@@ -11,7 +11,7 @@ export interface Source {
 	author: Author;
 	description?: string;
 	infoLink?: { url: string; text?: string };
-	bannerUrl?: string;
+	banner?: { light: string; dark?: string };
 	githubRepos?: string[];
 	packages?: { name: string; releases: string[] }[];
 }
@@ -80,7 +80,7 @@ export interface SiteData {
 	description?: string;
 	author: Author;
 	infoLink?: { url: string; text?: string };
-	bannerUrl?: string;
+	banner?: { light: string; dark?: string };
 	generatedAt: string;
 	packages: SitePackage[];
 }

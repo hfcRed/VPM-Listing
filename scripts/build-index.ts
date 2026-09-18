@@ -261,7 +261,7 @@ async function main() {
 		description: source.description,
 		author: source.author,
 		infoLink: source.infoLink,
-		bannerUrl: source.bannerUrl,
+		banner: source.banner,
 		generatedAt: new Date().toISOString(),
 		packages: sitePackages
 	};
