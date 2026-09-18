@@ -71,8 +71,8 @@
 
 	dialog {
 		margin: auto;
-		width: min(40rem, calc(100vw - 2rem));
-		max-height: calc(100vh - 2rem);
+		width: min(40rem, calc(100dvw - 2rem - env(safe-area-inset-left) - env(safe-area-inset-right)));
+		max-height: calc(100dvh - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
 		padding: 0;
 		border: var(--border-style);
 		border-radius: var(--radius-box);
