@@ -16,6 +16,6 @@
 		"light": "banner-light.avif",
 		"dark": "banner-dark.avif"
 	},
-	"githubRepos": ["hfcRed/Animation-Repathing"],
+	"githubRepos": ["hfcRed/Animation-Repathing","hfcRed/Shader-To-Animator-Bridge"],
 	"packages": []
 }
